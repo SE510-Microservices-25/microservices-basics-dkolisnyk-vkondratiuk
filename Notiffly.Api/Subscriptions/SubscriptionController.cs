@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Notiffly.Api.Common.Responses;
 using Notiffly.Api.Subscriptions.Payloads;
+using Notiffly.Api.Subscriptions.Responses;
+using Notiffly.Business.Subscriptions;
 
 namespace Notiffly.Api.Subscriptions;
 
@@ -8,20 +10,52 @@ namespace Notiffly.Api.Subscriptions;
 [Route("api/subscriptions")]
 public sealed class SubscriptionController
 {
-    [HttpPost]
-    [ProducesResponseType(typeof(StatusResponse), StatusCodes.Status201Created)]
-    public async Task<StatusResponse> Subscribe([FromBody] SubscribePayload payload)
+    private readonly SubscriptionsService _subscriptionsService;
+
+    public SubscriptionController(SubscriptionsService subscriptionsService)
     {
-        return new StatusResponse
+        _subscriptionsService = subscriptionsService;
+    }
+
+    [HttpGet]
+    [ProducesResponseType(typeof(CreateSubscriptionResponse), StatusCodes.Status201Created)]
+    public async Task<IEnumerable<SubscriptionResponse>> ListAll()
+    {
+        var subscriptions = await _subscriptionsService.ListAll();
+
+        var response = new List<SubscriptionResponse>();
+
+        foreach (var subscription in subscriptions)
         {
-            Success = true,
+            response.Add(
+                new SubscriptionResponse
+                {
+                    Id = subscription.Id,
+                    Topic = subscription.Topic,
+                });
+        }
+
+        return response;
+    }
+
+    [HttpPost]
+    [ProducesResponseType(typeof(CreateSubscriptionResponse), StatusCodes.Status201Created)]
+    public async Task<CreateSubscriptionResponse> Subscribe([FromBody] CreateSubscriptionPayload payload)
+    {
+        var id = await _subscriptionsService.Subscribe(payload.Topic);
+
+        return new CreateSubscriptionResponse
+        {
+            Id = id,
         };
     }
 
     [HttpDelete]
     [ProducesResponseType(typeof(StatusResponse), StatusCodes.Status200OK)]
-    public async Task<StatusResponse> Unsubscribe([FromBody] SubscribePayload payload)
+    public async Task<StatusResponse> Unsubscribe([FromBody] DeleteSubscriptionPayload payload)
     {
+        await _subscriptionsService.Unsubscribe(payload.Id);
+
         return new StatusResponse
         {
             Success = true,

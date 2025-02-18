@@ -1,9 +1,9 @@
 using System.ComponentModel.DataAnnotations;
-using Notiffly.Api.Subscriptions.Core;
+using Notiffly.Business.Subscriptions.Core;
 
 namespace Notiffly.Api.Subscriptions.Payloads;
 
-public sealed class SubscribePayload
+public sealed class CreateSubscriptionPayload
 {
     [Required]
     public SubscribableTopics Topic { get; set; }

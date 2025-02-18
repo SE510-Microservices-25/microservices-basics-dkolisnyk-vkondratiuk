@@ -1,4 +1,4 @@
-namespace Notiffly.Api.Subscriptions.Core;
+namespace Notiffly.Business.Subscriptions.Core;
 
 public enum SubscribableTopics
 {

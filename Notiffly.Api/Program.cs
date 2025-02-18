@@ -1,11 +1,8 @@
-using System.Text.Json.Serialization;
+using Notiffly.Api.Common.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddControllers()
-    .AddJsonOptions(options => { options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()); });
+builder.Services.Construct(builder.Configuration);
 
 var app = builder.Build();
 

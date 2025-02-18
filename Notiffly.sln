@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notiffly.Api", "Notiffly.Api\Notiffly.Api.csproj", "{F8E897BE-291B-41C1-BF35-AFE9CE98DF3C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notiffly.Business", "Notiffly.Business\Notiffly.Business.csproj", "{7264BEC8-4539-4F81-B3CA-F2C379F3FBA5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notiffly.Data", "Notiffly.Data\Notiffly.Data.csproj", "{4A57C973-B180-46EC-BD58-ED728D224E88}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F8E897BE-291B-41C1-BF35-AFE9CE98DF3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8E897BE-291B-41C1-BF35-AFE9CE98DF3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8E897BE-291B-41C1-BF35-AFE9CE98DF3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8E897BE-291B-41C1-BF35-AFE9CE98DF3C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7264BEC8-4539-4F81-B3CA-F2C379F3FBA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7264BEC8-4539-4F81-B3CA-F2C379F3FBA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7264BEC8-4539-4F81-B3CA-F2C379F3FBA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7264BEC8-4539-4F81-B3CA-F2C379F3FBA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A57C973-B180-46EC-BD58-ED728D224E88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A57C973-B180-46EC-BD58-ED728D224E88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A57C973-B180-46EC-BD58-ED728D224E88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A57C973-B180-46EC-BD58-ED728D224E88}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

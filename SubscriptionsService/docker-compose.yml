@@ -1,0 +1,35 @@
+version: "3.9"
+services:
+  subscriptions-postgres:
+    image: postgres
+    container_name: subscriptions_postgres
+    restart: always
+    ports:
+      - "5433:5432"      
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: pass123
+      POSTGRES_DB: subscriptions_db
+    volumes:
+      - subscriptions_pgdata:/var/lib/postgresql/data
+
+  subscriptions-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: subscriptions_api
+    ports:
+      - "5177:5177"       
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5177
+      - Postgres:Host=subscriptions-postgres
+      - Postgres:Port=5432
+      - Postgres:Database=subscriptions_db
+      - Postgres:User=postgres
+      - Postgres:Password=pass123
+    depends_on:
+      - subscriptions-postgres
+
+volumes:
+  subscriptions_pgdata:

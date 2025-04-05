@@ -1,0 +1,11 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <AssemblyName>Subscriptions.Business</AssemblyName>
+        <RootNamespace>Subscriptions.Business</RootNamespace>
+    </PropertyGroup>
+
+</Project>

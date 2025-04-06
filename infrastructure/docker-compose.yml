@@ -1,0 +1,66 @@
+services:
+  notifications-postgres:
+    image: postgres
+    container_name: notifications_postgres
+    restart: always
+    ports:
+      - '5434:5432'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: pass123
+      POSTGRES_DB: notifications_db
+    volumes:
+      - notifications_pgdata:/var/lib/postgresql/data
+
+  notifications-api:
+    build:
+      context: ../NotificationsService
+      dockerfile: Dockerfile
+    container_name: notifications_api
+    ports:
+      - '5179:5179'
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5179
+      - Postgres:Host=notifications-postgres
+      - Postgres:Port=5432
+      - Postgres:Database=notifications_db
+      - Postgres:User=postgres
+      - Postgres:Password=pass123
+    depends_on:
+      - notifications-postgres
+
+  subscriptions-postgres:
+    image: postgres
+    container_name: subscriptions_postgres
+    restart: always
+    ports:
+      - '5435:5432'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: pass123
+      POSTGRES_DB: subscriptions_db
+    volumes:
+      - subscriptions_pgdata:/var/lib/postgresql/data
+
+  subscriptions-api:
+    build:
+      context: ../SubscriptionsService
+      dockerfile: Dockerfile
+    container_name: subscriptions_api
+    ports:
+      - '5177:5177'
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5177
+      - Postgres:Host=subscriptions-postgres
+      - Postgres:Port=5432
+      - Postgres:Database=subscriptions_db
+      - Postgres:User=postgres
+      - Postgres:Password=pass123
+    depends_on:
+      - subscriptions-postgres
+
+volumes:
+  notifications_pgdata:
+  subscriptions_pgdata:

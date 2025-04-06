@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notifications-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: notifications-api
+  template:
+    metadata:
+      labels:
+        app: notifications-api
+    spec:
+      containers:
+      - name: notifications-api
+        image: infrastructure-notifications-api:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 5179
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Development
+        - name: ASPNETCORE_URLS
+          value: http://+:5179
+        - name: Postgres__Host
+          value: notifications-postgres
+        - name: Postgres__Port
+          value: "5432"
+        - name: Postgres__Database
+          value: notifications_db
+        - name: Postgres__User
+          value: postgres
+        - name: Postgres__Password
+          value: pass123 

@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: subscriptions-postgres
+spec:
+  serviceName: subscriptions-postgres
+  replicas: 1
+  selector:
+    matchLabels:
+      app: subscriptions-postgres
+  template:
+    metadata:
+      labels:
+        app: subscriptions-postgres
+    spec:
+      containers:
+      - name: subscriptions-postgres
+        image: postgres
+        ports:
+        - containerPort: 5432
+        env:
+        - name: POSTGRES_USER
+          value: postgres
+        - name: POSTGRES_PASSWORD
+          value: pass123
+        - name: POSTGRES_DB
+          value: subscriptions_db
+        volumeMounts:
+        - name: subscriptions-postgres-data
+          mountPath: /var/lib/postgresql/data
+  volumeClaimTemplates:
+  - metadata:
+      name: subscriptions-postgres-data
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 1Gi 

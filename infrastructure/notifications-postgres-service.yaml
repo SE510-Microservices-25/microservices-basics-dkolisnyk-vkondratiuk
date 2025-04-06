@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: notifications-postgres
+spec:
+  selector:
+    app: notifications-postgres
+  ports:
+  - port: 5432
+    targetPort: 5432 

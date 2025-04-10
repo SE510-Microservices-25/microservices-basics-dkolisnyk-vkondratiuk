@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: notifications-postgres
+spec:
+  serviceName: notifications-postgres
+  replicas: 1
+  selector:
+    matchLabels:
+      app: notifications-postgres
+  template:
+    metadata:
+      labels:
+        app: notifications-postgres
+    spec:
+      containers:
+      - name: notifications-postgres
+        image: postgres
+        ports:
+        - containerPort: 5432
+        env:
+        - name: POSTGRES_USER
+          value: postgres
+        - name: POSTGRES_PASSWORD
+          value: pass123
+        - name: POSTGRES_DB
+          value: notifications_db
+        volumeMounts:
+        - name: notifications-postgres-data
+          mountPath: /var/lib/postgresql/data
+  volumeClaimTemplates:
+  - metadata:
+      name: notifications-postgres-data
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 1Gi 

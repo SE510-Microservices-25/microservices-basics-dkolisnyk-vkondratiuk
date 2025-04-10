@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: subscriptions-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: subscriptions-api
+  template:
+    metadata:
+      labels:
+        app: subscriptions-api
+    spec:
+      containers:
+      - name: subscriptions-api
+        image: infrastructure-subscriptions-api:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 5177
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Development
+        - name: ASPNETCORE_URLS
+          value: http://+:5177
+        - name: Postgres__Host
+          value: subscriptions-postgres
+        - name: Postgres__Port
+          value: "5432"
+        - name: Postgres__Database
+          value: subscriptions_db
+        - name: Postgres__User
+          value: postgres
+        - name: Postgres__Password
+          value: pass123 

@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Subscriptions.Business.Notifications;
 using Subscriptions.Business.Subscriptions;
 using Subscriptions.Data.Contexts;
 using Subscriptions.Data.Repositories;
@@ -31,7 +32,13 @@ public static class ServiceCollectionExtensions
     private static IServiceCollection AddBusiness(this IServiceCollection services, ConfigurationManager configuration)
     {
         services.AddScoped<SubscriptionsService>();
-        
+
+        // remote calls to notification service
+        services.AddScoped<HttpClient>();
+        services.AddScoped<NotificationHttpRemoteServiceConfiguration>(sp =>
+            new NotificationHttpRemoteServiceConfiguration { Host = configuration["Remote:NotificationService:Host"] });
+        services.AddScoped<INotificationRemoteService, NotificationHttpRemoteService>();
+
         return services;
     }
 

@@ -27,9 +27,9 @@ public class NotificationRepository : INotificationRepository
 
     public async Task Delete(Guid id)
     {
-        var notif = new Notification { Id = id };
-        _context.Notifications.Attach(notif);
-        _context.Notifications.Remove(notif);
+        var notification = new Notification { Id = id };
+        _context.Notifications.Attach(notification);
+        _context.Notifications.Remove(notification);
         await _context.SaveChangesAsync();
     }
 }

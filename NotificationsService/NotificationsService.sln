@@ -1,10 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+# 
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notifications.Api", "Notifications.Api\Notifications.Api.csproj", "{9156D5ED-0D9F-4538-A918-ABF8DF563A80}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notifications.Business", "Notifications.Business\Notifications.Business.csproj", "{2009BE71-896F-4501-ADC0-D06CE44C3678}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notifications.Data", "Notifications.Data\Notifications.Data.csproj", "{26AF3580-65FB-435F-B564-4F3650840786}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notifications.Tests", "Notifications.Tests\Notifications.Tests.csproj", "{15F66CFF-5DA5-4300-B447-AC7B085C8F65}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,5 +27,9 @@ Global
 		{26AF3580-65FB-435F-B564-4F3650840786}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{26AF3580-65FB-435F-B564-4F3650840786}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{26AF3580-65FB-435F-B564-4F3650840786}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15F66CFF-5DA5-4300-B447-AC7B085C8F65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15F66CFF-5DA5-4300-B447-AC7B085C8F65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15F66CFF-5DA5-4300-B447-AC7B085C8F65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15F66CFF-5DA5-4300-B447-AC7B085C8F65}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

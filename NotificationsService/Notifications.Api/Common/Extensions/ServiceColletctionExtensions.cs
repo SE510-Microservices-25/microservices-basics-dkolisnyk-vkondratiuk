@@ -1,6 +1,8 @@
 using System.Text.Json.Serialization;
 using Microsoft.OpenApi.Models;
 using Notifications.Business.Notifications;
+using Notifications.Business.Notifications.Commands;
+using Notifications.Business.Notifications.Queries;
 using Notifications.Data.Contexts;
 using Notifications.Data.Repositories;
 
@@ -36,6 +38,14 @@ public static class ServiceCollectionExtensions
     private static IServiceCollection AddBusiness(this IServiceCollection services)
     {
         services.AddScoped<NotificationService>();
+        
+        services.AddMediatR(cfg => 
+            cfg.RegisterServicesFromAssemblies(
+                typeof(CreateNotificationCommand).Assembly,
+                typeof(GetAllNotificationsQuery).Assembly
+            )
+        );
+
         return services;
     }
 

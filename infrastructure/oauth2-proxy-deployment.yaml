@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: oauth2-proxy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: oauth2-proxy
+  template:
+    metadata:
+      labels:
+        app: oauth2-proxy
+    spec:
+      containers:
+      - name: oauth2-proxy
+        image: quay.io/oauth2-proxy/oauth2-proxy:latest
+        args:
+          - --provider=keycloak-oidc
+          - --client-id=notiffly
+          - --client-secret=cr06sjskqhCtysk0kW9yMMP2l1pH7Uov
+          - --redirect-url=https://microservices.local/oauth2/callback
+          - --oidc-issuer-url=http://keycloak.default.svc.cluster.local:8080/realms/notiffly
+          - --cookie-secure=false
+          - --email-domain=*
+          - --code-challenge-method=S256
+          - --cookie-secret=95df60dd5c7af0a9171c4822c06b0881
+        ports:
+          - containerPort: 4180

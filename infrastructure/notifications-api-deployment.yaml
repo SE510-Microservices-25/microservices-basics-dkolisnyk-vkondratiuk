@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: notifications-api
-        image: infrastructure-notifications-api:latest
+        image: infrastructure_notifications-api:latest
         imagePullPolicy: Never
         ports:
         - containerPort: 5179

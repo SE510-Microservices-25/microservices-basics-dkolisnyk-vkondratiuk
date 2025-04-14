@@ -5,12 +5,21 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/use-regex: "true"
     nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/auth-url: "http://oauth2-proxy.default.svc.cluster.local/oauth2/auth"
+    nginx.ingress.kubernetes.io/auth-signin: "http://oauth2-proxy.default.svc.cluster.local/oauth2/start?rd=$escaped_request_uri"
 spec:
   ingressClassName: nginx
   rules:
     - host: microservices.local
       http:
         paths:
+          - path: /oauth2(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: oauth2-proxy
+                port:
+                  number: 80
           - path: /notifications(/|$)(.*)
             pathType: ImplementationSpecific
             backend:
@@ -18,7 +27,6 @@ spec:
                 name: notifications-api
                 port:
                   number: 5179
-                  
           - path: /subscriptions(/|$)(.*)
             pathType: ImplementationSpecific
             backend:

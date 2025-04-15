@@ -39,7 +39,7 @@ public sealed class NotificationsConsumer : IConsumer<ProduceNotificationPayload
     {
         var list = await _notificationOutboxRepository.ListAll();
 
-        var match = list.Where(x => x.EventId == eventId);
+        var match = list.Where(x => x.Id == eventId);
 
         if (match == null)
         {
@@ -51,6 +51,6 @@ public sealed class NotificationsConsumer : IConsumer<ProduceNotificationPayload
 
     private async Task SaveConsumed(Guid eventId)
     {
-        await _notificationOutboxRepository.Create(new NotificationOutbox { EventId = eventId });
+        await _notificationOutboxRepository.Create(new NotificationOutbox { Id = eventId });
     }
 }

@@ -8,4 +8,9 @@
         <RootNamespace>Subscriptions.Business</RootNamespace>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="MassTransit.AspNetCore" Version="7.3.1" />
+      <PackageReference Include="MassTransit.RabbitMQ" Version="8.4.0" />
+    </ItemGroup>
+
 </Project>

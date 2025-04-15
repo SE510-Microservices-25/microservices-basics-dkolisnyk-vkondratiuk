@@ -1,4 +1,6 @@
 using System.Text.Json.Serialization;
+using MassTransit;
+using Subscriptions.Business.Common.MessageBroker;
 using Subscriptions.Business.Notifications;
 using Subscriptions.Business.Subscriptions;
 using Subscriptions.Data.Contexts;
@@ -32,13 +34,20 @@ public static class ServiceCollectionExtensions
     private static IServiceCollection AddBusiness(this IServiceCollection services, ConfigurationManager configuration)
     {
         services.AddScoped<SubscriptionsService>();
-
-        // remote calls to notification service
-        services.AddScoped<HttpClient>();
-        services.AddScoped<NotificationHttpRemoteServiceConfiguration>(sp =>
-            new NotificationHttpRemoteServiceConfiguration { Host = configuration["Remote:NotificationService:Host"] });
-        services.AddScoped<INotificationRemoteService, NotificationHttpRemoteService>();
-
+        services.AddMassTransit(x =>
+        {
+            x.UsingRabbitMq((context, cfg) =>
+            {
+                cfg.Host(configuration["RabbitMQ:Host"], h =>
+                {
+                    h.Username(configuration["RabbitMQ:Username"]);
+                    h.Password(configuration["RabbitMQ:Password"]);
+                });
+            });
+        });
+        services.AddScoped<IMessageBroker, RabbitMqMessageBroker>();
+        services.AddScoped<INotificationProducer, MockNotificationProducer>();
+        
         return services;
     }
 

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+kubectl apply -f rabbitmq-deployment.yaml
+
 kubectl apply -f subscriptions-postgres-statefulset.yaml
 kubectl apply -f notifications-postgres-statefulset.yaml
 

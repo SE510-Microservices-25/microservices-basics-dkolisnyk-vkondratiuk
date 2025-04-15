@@ -27,7 +27,7 @@ public class NotificationOutboxRepository : INotificationOutboxRepository
 
     public async Task Delete(Guid eventId)
     {
-        var outbox = new NotificationOutbox { EventId = eventId };
+        var outbox = new NotificationOutbox { Id = eventId };
         _context.NotificationOutboxes.Attach(outbox);
         _context.NotificationOutboxes.Remove(outbox);
         await _context.SaveChangesAsync();

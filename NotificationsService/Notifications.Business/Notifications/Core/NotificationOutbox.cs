@@ -2,5 +2,5 @@ namespace Notifications.Business.Notifications.Core;
 
 public class NotificationOutbox
 {
-    public Guid EventId { get; set; }
+    public Guid Id { get; set; }
 }

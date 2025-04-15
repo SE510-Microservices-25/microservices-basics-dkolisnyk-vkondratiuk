@@ -47,6 +47,7 @@ public static class ServiceCollectionExtensions
         });
         services.AddScoped<IMessageBroker, RabbitMqMessageBroker>();
         services.AddScoped<INotificationProducer, MockNotificationProducer>();
+        services.AddScoped<BackgroundNotificationProducer>();
         
         return services;
     }
@@ -65,6 +66,7 @@ public static class ServiceCollectionExtensions
         services.AddNpgsql<ApplicationContext>(connectionString);
 
         services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
+        services.AddScoped<IOutboxMessageRepository, OutboxMessageRepository>();
 
         return services;
     }

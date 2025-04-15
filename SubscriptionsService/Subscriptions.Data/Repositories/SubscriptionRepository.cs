@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using Subscriptions.Business.Subscriptions;
 using Subscriptions.Business.Subscriptions.Core;
@@ -22,6 +23,13 @@ public class SubscriptionRepository : ISubscriptionRepository
     public async Task Create(Subscription entity)
     {
         await _applicationContext.Subscriptions.AddAsync(entity);
+        await _applicationContext.OutboxMessages.AddAsync(new OutboxMessage
+        {
+            Type = "Subscription Added",
+            Payload = JsonSerializer.Serialize(entity),
+            CreatedAt = DateTime.Now,
+            Processed = false,
+        });
         await _applicationContext.SaveChangesAsync();
     }
 

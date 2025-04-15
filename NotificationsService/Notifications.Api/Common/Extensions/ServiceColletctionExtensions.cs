@@ -1,5 +1,7 @@
 using System.Text.Json.Serialization;
+using MassTransit;
 using Microsoft.OpenApi.Models;
+using Notifications.Api.Notifications;
 using Notifications.Business.Notifications;
 using Notifications.Data.Contexts;
 using Notifications.Data.Repositories;
@@ -12,7 +14,7 @@ public static class ServiceCollectionExtensions
     {
         return services
             .AddApi()
-            .AddBusiness()
+            .AddBusiness(configuration)
             .AddData(configuration);
     }
 
@@ -33,9 +35,29 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
-    private static IServiceCollection AddBusiness(this IServiceCollection services)
+    private static IServiceCollection AddBusiness(this IServiceCollection services, ConfigurationManager configuration)
     {
         services.AddScoped<NotificationService>();
+        services.AddMassTransit(x =>
+        {
+            x.AddConsumer<NotificationsConsumer>();
+            x.SetKebabCaseEndpointNameFormatter();
+            x.UsingRabbitMq((context, cfg) =>
+            {
+                cfg.Host(configuration["RabbitMQ:Host"], h =>
+                {
+                    h.Username(configuration["RabbitMQ:Username"]);
+                    h.Password(configuration["RabbitMQ:Password"]);
+                });
+                
+                cfg.ReceiveEndpoint("notification-emitted-queue", e =>
+                {
+                    e.ConfigureConsumer<NotificationsConsumer>(context);
+                    e.UseMessageRetry(r => r.Interval(5, TimeSpan.FromSeconds(2)));
+                });
+            });
+        });
+       
         return services;
     }
 
@@ -53,6 +75,7 @@ public static class ServiceCollectionExtensions
         services.AddNpgsql<NotificationsContext>(connectionString);
 
         services.AddScoped<INotificationRepository, NotificationRepository>();
+        services.AddScoped<INotificationOutboxRepository, NotificationOutboxRepository>();
 
         return services;
     }
